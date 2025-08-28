@@ -4,6 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { z } = require('zod'); // Importa o Zod
 
 const app = express();
 
@@ -23,9 +24,23 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// --- SCHEMAS DE VALIDAÇÃO COM ZOD ---
 
-// --- BASE DE CONHECIMENTO E LÓGICA DO CHATBOT APRIMORADA ---
+// Schema para o formulário de contato
+const contactFormSchema = z.object({
+  name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
+  _replyto: z.string().email("Por favor, insira um e-mail válido."),
+  message: z.string().min(10, "A mensagem deve ter pelo menos 10 caracteres."),
+});
 
+// Schema para a inscrição na newsletter
+const newsletterSchema = z.object({
+  name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres."),
+  _replyto: z.string().email("Por favor, insira um e-mail válido."),
+  whatsapp: z.string().optional(), // WhatsApp é opcional
+});
+
+// --- BASE DE CONHECIMENTO E PROMPT DO CHATBOT ---
 const LAZERNET_KNOWLEDGE_BASE = `
 # Sobre a Empresa e Atendimento
 - Nome: LAZERNET.COM.BR LTDA (CNPJ: 10.922.171/0001-21).
@@ -83,7 +98,6 @@ const LAZERNET_KNOWLEDGE_BASE = `
 - Título: 'Ping, Latência e Jitter: O Trio que Define sua Vitória nos Jogos Online' | Resumo: Explica os termos técnicos importantes para jogos online e por que a fibra óptica é a melhor opção. | Link: /blog/ping-latencia-jitter-para-jogos-online
 `;
 
-// 2. O Prompt do Sistema com regras mais avançadas.
 const SYSTEM_PROMPT = `
 Você é LazerBot, o assistente virtual especialista da Lazernet. Sua personalidade é amigável, eficiente, proativa e muito prestativa. Use emojis de forma natural para tornar a conversa mais leve. 😉
 
@@ -107,12 +121,15 @@ ${LAZERNET_KNOWLEDGE_BASE}
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-app.post('/chatbot', async (req, res) => {
-  const { message } = req.body;
-  if (!message) {
-    return res.status(400).json({ status: 'erro', message: 'A mensagem é obrigatória.' });
-  }
+// --- ROTAS DA APLICAÇÃO ---
+
+app.post('/chatbot', async (req, res, next) => {
   try {
+    const { message } = req.body;
+    if (!message) {
+      return res.status(400).json({ status: 'erro', message: 'A mensagem é obrigatória.' });
+    }
+
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
     const fullPrompt = `${SYSTEM_PROMPT}\n\n**Cenário Atual:** O cliente enviou a seguinte mensagem.\n**Pergunta do Cliente:** "${message}"\n\n**Sua Resposta como LazerBot (lembre-se de usar '|||' se necessário):**`;
     const result = await model.generateContent(fullPrompt);
@@ -122,30 +139,23 @@ app.post('/chatbot', async (req, res) => {
     const messages = text.split('|||').map(msg => msg.trim()).filter(msg => msg.length > 0);
 
     res.json({ status: 'sucesso', messages: messages });
-
   } catch (error) {
-    console.error('Erro no chatbot:', error);
-    res.status(500).json({ status: 'erro', message: 'Ocorreu um erro ao processar sua mensagem.' });
+    next(error); // Passa o erro para o middleware central
   }
 });
 
-
-// --- ROTA PARA O FORMULÁRIO DE CONTATO ---
-app.post('/enviar-contato', async (req, res) => {
-  const { name, _replyto, message } = req.body;
-
-  if (!name || !_replyto || !message) {
-    return res.status(400).json({ status: 'erro', message: 'Faltam campos obrigatórios.' });
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_PORT == 465,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  });
-
+app.post('/enviar-contato', async (req, res, next) => {
   try {
+    // Valida os dados recebidos com o schema do Zod
+    const { name, _replyto, message } = contactFormSchema.parse(req.body);
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: process.env.SMTP_PORT == 465,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    });
+
     await transporter.sendMail({
       from: `"${name}" <${process.env.SMTP_USER}>`,
       to: process.env.EMAIL_TO,
@@ -162,27 +172,22 @@ app.post('/enviar-contato', async (req, res) => {
     });
     res.status(200).json({ status: 'sucesso', message: 'E-mail enviado com sucesso!' });
   } catch (error) {
-    console.error('Erro no formulário de contato:', error);
-    res.status(500).json({ status: 'erro', message: 'Ocorreu um erro interno.' });
+    next(error); // Passa o erro para o middleware central
   }
 });
 
-// --- ROTA PARA O FORMULÁRIO DE NEWSLETTER ---
-app.post('/inscrever-newsletter', async (req, res) => {
-    const { name, _replyto, whatsapp } = req.body;
-
-  if (!name || !_replyto) {
-    return res.status(400).json({ status: 'erro', message: 'Nome e e-mail são obrigatórios.' });
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_PORT == 465,
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  });
-
+app.post('/inscrever-newsletter', async (req, res, next) => {
   try {
+    // Valida os dados recebidos com o schema do Zod
+    const { name, _replyto, whatsapp } = newsletterSchema.parse(req.body);
+
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      secure: process.env.SMTP_PORT == 465,
+      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    });
+
     await transporter.sendMail({
       from: `"Inscrição Newsletter" <${process.env.SMTP_USER}>`,
       to: process.env.EMAIL_TO,
@@ -197,11 +202,30 @@ app.post('/inscrever-newsletter', async (req, res) => {
     });
     res.status(200).json({ status: 'sucesso', message: 'Inscrição realizada com sucesso!' });
   } catch (error) {
-    console.error('Erro no formulário de newsletter:', error);
-    res.status(500).json({ status: 'erro', message: 'Ocorreu um erro interno.' });
+    next(error); // Passa o erro para o middleware central
   }
 });
 
+// --- MIDDLEWARE DE TRATAMENTO DE ERROS CENTRALIZADO ---
+app.use((err, req, res, next) => {
+  console.error(err); // Loga o erro no console para debugging
+
+  // Se o erro for do Zod (erro de validação)
+  if (err instanceof z.ZodError) {
+    return res.status(400).json({
+      status: 'erro',
+      message: 'Dados inválidos.',
+      // Mapeia os erros para serem mais fáceis de ler no frontend
+      errors: err.errors.map(e => ({ field: e.path.join('.'), message: e.message })),
+    });
+  }
+
+  // Para todos os outros tipos de erro
+  return res.status(500).json({
+    status: 'erro',
+    message: 'Ocorreu um erro interno no servidor.',
+  });
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
