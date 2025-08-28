@@ -3,19 +3,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 
 // --- CONFIGURAÇÃO DE CORS USANDO VARIÁVEIS DE AMBIENTE ---
-
-// 1. Lê a lista de URLs permitidos do ficheiro .env.
-//    No .env, os URLs estarão separados por vírgula.
 const allowedOrigins = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : [];
-
-// 2. Cria as opções do CORS.
 const corsOptions = {
   origin: function (origin, callback) {
-    // Permite pedidos da sua lista e pedidos sem 'origin' (como apps de teste de API)
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
@@ -23,11 +18,7 @@ const corsOptions = {
     }
   }
 };
-
-// 3. Usa o CORS com as nossas opções.
 app.use(cors(corsOptions));
-
-// --- FIM DA CONFIGURAÇÃO DE CORS ---
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -71,12 +62,12 @@ app.post('/enviar-contato', async (req, res) => {
 
 // --- ROTA PARA O FORMULÁRIO DE NEWSLETTER ---
 app.post('/inscrever-newsletter', async (req, res) => {
-  const { name, _replyto, whatsapp } = req.body;
+    const { name, _replyto, whatsapp } = req.body;
 
   if (!name || !_replyto) {
     return res.status(400).json({ status: 'erro', message: 'Nome e e-mail são obrigatórios.' });
   }
-  
+
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
@@ -103,6 +94,29 @@ app.post('/inscrever-newsletter', async (req, res) => {
     res.status(500).json({ status: 'erro', message: 'Ocorreu um erro interno.' });
   }
 });
+
+// --- ROTA PARA O CHATBOT ---
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+app.post('/chatbot', async (req, res) => {
+  const { message } = req.body;
+
+  if (!message) {
+    return res.status(400).json({ status: 'erro', message: 'A mensagem é obrigatória.' });
+  }
+
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const result = await model.generateContent(message);
+    const response = await result.response;
+    const text = response.text();
+    res.json({ status: 'sucesso', message: text });
+  } catch (error) {
+    console.error('Erro no chatbot:', error);
+    res.status(500).json({ status: 'erro', message: 'Ocorreu um erro ao processar sua mensagem.' });
+  }
+});
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
