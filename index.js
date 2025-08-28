@@ -98,6 +98,7 @@ app.post('/inscrever-newsletter', async (req, res) => {
 // --- ROTA PARA O CHATBOT ---
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+
 app.post('/chatbot', async (req, res) => {
   const { message } = req.body;
 
@@ -106,7 +107,7 @@ app.post('/chatbot', async (req, res) => {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
     const result = await model.generateContent(message);
     const response = await result.response;
     const text = response.text();
