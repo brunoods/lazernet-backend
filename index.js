@@ -46,13 +46,17 @@ const newsletterSchema = z.object({
   _replyto: z.string().email("Por favor, insira um e-mail válido."),
   whatsapp: z.string().optional(),
 });
+// --- ALTERAÇÃO APLICADA AQUI: Novo schema para o histórico ---
 const chatbotSchema = z.object({
-    message: z.string().min(1, "A mensagem não pode estar vazia.").max(500, "A mensagem é muito longa."),
+    history: z.array(z.object({
+        sender: z.enum(['user', 'bot']),
+        text: z.string(),
+    })).min(1, "O histórico não pode estar vazio."),
 });
 
 // INSTÂNCIAS DE SERVIÇOS
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT, 10),
@@ -60,11 +64,18 @@ const transporter = nodemailer.createTransport({
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
 });
 
-// ROTA DO CHATBOT COM TRATAMENTO DE ERRO DE QUOTA
+// ROTA DO CHATBOT ATUALIZADA PARA RECEBER HISTÓRICO
 app.post('/chatbot', async (req, res, next) => {
   try {
-    const { message } = chatbotSchema.parse(req.body);
-    const fullPrompt = `${SYSTEM_PROMPT}\n\n**Pergunta do Cliente:** "${message}"\n\n**Sua Resposta como LazerBot:**`;
+    const { history } = chatbotSchema.parse(req.body);
+
+    // --- ALTERAÇÃO APLICADA AQUI: Formatar o histórico ---
+    const formattedHistory = history
+        .map(msg => `${msg.sender === 'user' ? 'Cliente' : 'LazerBot'}: ${msg.text}`)
+        .join('\n');
+
+    const fullPrompt = `${SYSTEM_PROMPT}\n\n**Histórico da Conversa Atual:**\n${formattedHistory}\n\n**Sua Próxima Resposta como LazerBot:**`;
+    
     const timeoutPromise = new Promise((_, reject) => 
         setTimeout(() => reject(new Error('Timeout: A API demorou muito para responder.')), 10000)
     );
@@ -78,12 +89,9 @@ app.post('/chatbot', async (req, res, next) => {
     res.json({ status: 'sucesso', messages });
   } catch (error) {
     console.error(`[CHATBOT_ERROR]: ${error.message}`);
-    // --- ALTERAÇÃO APLICADA AQUI ---
-    // Verifica se o erro é de limite de quota (status 429)
     if (error.status === 429) {
       return res.status(429).json({
         status: 'erro_quota',
-        // Mensagem mais amigável para o utilizador
         messages: ["Estou a receber muitas perguntas no momento! 😅 Por favor, tente novamente em alguns instantes."]
       });
     }
@@ -91,6 +99,7 @@ app.post('/chatbot', async (req, res, next) => {
   }
 });
 
+// ... (as outras rotas não mudam) ...
 app.post('/enviar-contato', async (req, res, next) => {
   try {
     const { name, _replyto, message } = contactFormSchema.parse(req.body);
@@ -123,8 +132,7 @@ app.post('/inscrever-newsletter', async (req, res, next) => {
   }
 });
 
-
-// MIDDLEWARE DE TRATAMENTO DE ERROS CENTRALIZADO
+// MIDDLEWARE DE TRATAMENTO DE ERROS
 app.use((err, req, res, next) => {
   console.error(err); 
   if (err instanceof z.ZodError) {
@@ -134,7 +142,6 @@ app.use((err, req, res, next) => {
       errors: err.errors.map(e => ({ field: e.path.join('.'), message: e.message })),
     });
   }
-  // Se a resposta ainda não foi enviada, envia uma resposta de erro genérica.
   if (!res.headersSent) {
     return res.status(500).json({
       status: 'erro',
