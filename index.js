@@ -105,7 +105,7 @@ app.post('/chatbot', async (req, res, next) => {
       return res.status(400).json({ status: 'erro', message: 'A mensagem é obrigatória.' });
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
     const fullPrompt = `${SYSTEM_PROMPT}\n\n**Cenário Atual:** O cliente enviou a seguinte mensagem.\n**Pergunta do Cliente:** "${message}"\n\n**Sua Resposta como LazerBot (lembre-se de usar '|||' se necessário):**`;
     const result = await model.generateContent(fullPrompt);
     const response = await result.response;
