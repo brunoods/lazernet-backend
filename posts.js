@@ -1,5 +1,4 @@
 //posts.js
-const API_URL = "https://lazernet-backend.onrender.com"
 
 module.exports.postsData = [
   {
