@@ -1,4 +1,6 @@
-// data/blog/posts.js
+//posts.js
+const API_URL = 'https://lazernet-backend.onrender.com';
+
 module.exports.postsData = [
   {
     slug: 'iptv-pirata-trava-internet-ou-servidor',
@@ -6,7 +8,7 @@ module.exports.postsData = [
     date: '2025-08-26',
     author: 'Equipe Lazernet',
     excerpt: 'Muitos culpam a internet quando a TV Box trava, mas a verdade é mais complexa. Entenda de uma vez por todas por que o seu serviço de IPTV pode estar a falhar e como saber se a sua internet está a funcionar corretamente.',
-    image: '/img/blog/iptv-travando.webp',
+    image: '${API_URL}/images/iptv-travando.webp',
     content: `
       <p>É uma situação frustrante: no meio do seu filme, série ou jogo de futebol, a imagem congela e um ícone de "loading" aparece. A primeira reação de muitos é culpar o provedor de internet. Mas será que a culpa é mesmo da sua conexão?</p>
       <p>Neste post, vamos explicar a fundo como os serviços de <strong>IPTV e TV Box (especialmente os não oficiais, ou "piratas")</strong> funcionam e por que eles travam com tanta frequência.</p>
@@ -38,7 +40,7 @@ module.exports.postsData = [
     date: '2025-08-19',
     author: 'Equipe Lazernet',
     excerpt: 'Sua internet parece lenta? O problema pode ser o seu sinal Wi-Fi! Descubra como otimizar sua rede com dicas simples e eficazes.',
-    image: '/img/blog/wifi-dicas.jpg',
+    image: '${API_URL}/images/wifi-dicas.jpg',
     content: `
       <p>Um sinal de Wi-Fi fraco pode ser frustrante, mas muitas vezes a solução é mais simples do que parece. Antes de pensar em trocar de plano, experimente estas 5 dicas para otimizar sua rede sem fio em casa.</p>
       <h3 class="text-xl font-bold mt-6 mb-2">1. Posicione o Roteador Corretamente</h3>
@@ -59,7 +61,7 @@ module.exports.postsData = [
     date: '2025-08-12',
     author: 'Equipe Lazernet',
     excerpt: 'Você contrata um plano de 100 Mega, mas o download aparece com 12 MB/s? Não se preocupe, você não está sendo enganado! Entenda a diferença entre Megabit e Megabyte.',
-    image: '/img/blog/megabits.jpg',
+    image: '${API_URL}/images/megabits.jpg',
     content: `
       <p>Uma das maiores confusões no mundo da internet é a diferença entre "Mega" (Megabit) e "Mega" (Megabyte). Vamos esclarecer isso de uma vez por todas.</p>
       <h3 class="text-xl font-bold mt-6 mb-2">Megabit vs. Megabyte</h3>
@@ -78,7 +80,7 @@ module.exports.postsData = [
     date: '2025-08-05',
     author: 'Equipe Lazernet',
     excerpt: 'Seu roteador mostra duas redes Wi-Fi e você não sabe qual escolher? Explicamos de forma simples a diferença entre as redes 2.4GHz e 5GHz.',
-    image: '/img/blog/wifi-ghz.png',
+    image: '${API_URL}/images/wifi-ghz.png',
     content: `
       <p>Muitos roteadores modernos são "dual-band", o que significa que eles criam duas redes Wi-Fi diferentes: uma de 2.4GHz e outra de 5GHz. Mas qual delas você deve usar?</p>
       <h3 class="text-xl font-bold mt-6 mb-2">Rede 2.4GHz: Maior Alcance</h3>
@@ -95,7 +97,7 @@ module.exports.postsData = [
     date: '2025-07-29',
     author: 'Equipe Lazernet',
     excerpt: 'Escolher o plano de internet certo pode parecer complicado. Ajudamos você a decidir qual velocidade se encaixa melhor nas suas necessidades diárias.',
-    image: '/img/blog/qual-velocidade.webp',
+    image: '${API_URL}/images/qual-velocidade.webp',
     content: `
       <p>A velocidade ideal de internet varia muito de acordo com o uso. Um plano que é perfeito para uma pessoa pode não ser suficiente para outra. Veja nossas recomendações:</p>
       <h3 class="text-xl font-bold mt-6 mb-2">Para o Dia a Dia (Até 100 Mega)</h3>
@@ -112,7 +114,7 @@ module.exports.postsData = [
     date: '2025-07-22',
     author: 'Equipe Lazernet',
     excerpt: 'Você sabe por que a fibra óptica é considerada a melhor tecnologia de internet? Comparamos suas vantagens em relação a outras conexões.',
-    image: '/img/blog/tecnologias-internet.jpg',
+    image: '${API_URL}/images/tecnologias-internet.jpg',
     content: `
       <p>Na hora de escolher um provedor de internet, é comum encontrar diferentes tecnologias. Entender as vantagens de cada uma é fundamental para fazer a melhor escolha.</p>
       <h3 class="text-xl font-bold mt-6 mb-2">Velocidade e Estabilidade</h3>
@@ -129,7 +131,7 @@ module.exports.postsData = [
     date: '2025-07-15',
     author: 'Equipe Lazernet',
     excerpt: 'Seu teste de velocidade não está batendo com o plano contratado? Siga nosso guia para garantir que você está medindo sua conexão da forma mais precisa possível.',
-    image: '/img/blog/teste-velocidade.webp',
+    image: '${API_URL}/images/teste-velocidade.webp',
     content: `
       <p>Medir a velocidade da sua internet parece simples, mas vários fatores podem influenciar o resultado. Para ter um número preciso, siga estas dicas:</p>
       <h3 class="text-xl font-bold mt-6 mb-2">1. Conecte-se via Cabo de Rede</h3>
@@ -149,7 +151,7 @@ module.exports.postsData = [
     date: '2025-07-08',
     author: 'Equipe Lazernet',
     excerpt: 'Navegar na internet é ótimo, mas é preciso ter cuidado. Confira 4 dicas fundamentais para proteger seus dados e sua privacidade online.',
-    image: '/img/blog/seguranca-online.png',
+    image: '${API_URL}/images/seguranca-online.png',
     content: `
       <p>A internet é uma ferramenta poderosa, mas também pode apresentar riscos. Proteger suas informações pessoais é mais importante do que nunca. Aqui estão 4 dicas essenciais para iniciantes.</p>
       <h3 class="text-xl font-bold mt-6 mb-2">1. Crie Senhas Fortes e Únicas</h3>
@@ -168,7 +170,7 @@ module.exports.postsData = [
     date: '2025-07-01',
     author: 'Equipe Lazernet',
     excerpt: 'Você já se perguntou o que acontece nos bastidores para sua internet funcionar? Falamos um pouco sobre a manutenção e os constantes investimentos na nossa rede.',
-    image: '/img/blog/manutencao-rede.jpg',
+    image: '${API_URL}/images/manutencao-rede.jpg',
     content: `
       <p>Garantir uma conexão de alta qualidade 24 horas por dia é nossa maior prioridade. Para isso, nossa equipe técnica trabalha constantemente nos bastidores, realizando manutenções preventivas e atualizações em nossa infraestrutura.</p>
       <h3 class="text-xl font-bold mt-6 mb-2">Monitoramento Constante</h3>
@@ -183,7 +185,7 @@ module.exports.postsData = [
     date: '2025-06-24',
     author: 'Equipe Lazernet',
     excerpt: 'Cansado de falar com robôs e esperar horas no telefone? Descubra as vantagens de ter um provedor com uma equipe de suporte que realmente conhece a sua região.',
-    image: '/img/blog/suporte-local.jpg',
+    image: '${API_URL}/images/suporte-local.jpg',
     content: `
       <p>Em um mundo dominado por grandes corporações e atendimento automatizado, a Lazernet se orgulha de oferecer um diferencial: um suporte técnico local e humanizado.</p>
       <h3 class="text-xl font-bold mt-6 mb-2">Atendimento Rápido e Sem Burocracia</h3>
@@ -199,7 +201,7 @@ module.exports.postsData = [
     date: '2025-06-17',
     author: 'Equipe Lazernet',
     excerpt: 'Você é gamer e sofre com "lag"? Entenda de uma vez por todas o que é Ping, Latência e Jitter e por que a fibra óptica da Lazernet é a sua melhor aliada para vencer.',
-    image: '/img/blog/ping-jogos.jpg',
+    image: '${API_URL}/images/ping-jogos.jpg',
     content: `
       <p>Se você joga online, já sentiu a frustração de um personagem que não responde a tempo ou de ser derrotado por um inimigo que parecia estar "teleportando". Isso é o famoso "lag", e os culpados geralmente são o Ping, a Latência e o Jitter.</p>
       
@@ -224,7 +226,7 @@ module.exports.postsData = [
     date: '2025-06-10',
     author: 'Equipe Lazernet',
     excerpt: 'Você sabe qual a função de cada aparelho que traz a internet até você? Explicamos de forma simples a diferença entre Modem, Roteador e a ONU da fibra óptica.',
-    image: '/img/blog/modem-roteador.jpg',
+    image: '${API_URL}/images/modem-roteador.jpg',
     content: `
       <p>Quando a internet é instalada, alguns equipamentos são deixados na sua casa, mas você sabe para que serve cada um? Entender a função deles ajuda a resolver problemas simples. Vamos desvendar os mais comuns.</p>
 
@@ -244,7 +246,7 @@ module.exports.postsData = [
     date: '2025-06-03',
     author: 'Equipe Lazernet',
     excerpt: 'Você já ouviu falar em Wi-Fi 6? Entenda o que essa nova tecnologia oferece e descubra se já é hora de atualizar o seu roteador para ter uma conexão ainda mais rápida e eficiente.',
-    image: '/img/blog/wifi-6.webp',
+    image: '${API_URL}/images/wifi-6.webp',
     content: `
       <p>A tecnologia Wi-Fi está sempre a evoluir, e a mais recente grande atualização é o <strong>Wi-Fi 6 (também conhecido como 802.11ax)</strong>. Ele não é apenas mais rápido, mas também mais inteligente na forma como lida com múltiplos dispositivos.</p>
 
@@ -266,7 +268,7 @@ module.exports.postsData = [
     date: '2025-05-27',
     author: 'Equipe Lazernet',
     excerpt: 'Já tentou aceder a uma câmara de segurança ou abrir um servidor de jogo e não conseguiu? O culpado pode ser o CGNAT. Explicamos o que é e como isso funciona.',
-    image: '/img/blog/cgnat.jpg',
+    image: '${API_URL}/images/cgnat.jpg',
     content: `
       <p>Com o esgotamento dos endereços de IPV4 no mundo, os provedores de internet adotaram uma tecnologia chamada <strong>CGNAT (Carrier-Grade NAT)</strong> para otimizar o uso dos IPs disponíveis. Mas o que isso significa para você?</p>
 
@@ -292,7 +294,7 @@ module.exports.postsData = [
     date: '2025-05-20',
     author: 'Equipe Lazernet',
     excerpt: 'Você digita "google.com", mas como seu computador sabe para onde ir? A mágica acontece graças ao DNS. Entenda o que é e como a escolha de um bom servidor DNS pode otimizar sua navegação.',
-    image: '/img/blog/servidor-dns.jpg',
+    image: '${API_URL}/images/servidor-dns.jpg',
     content: `
       <p>Sempre que você acede a um site, uma tecnologia invisível chamada <strong>DNS (Domain Name System)</strong> entra em ação. Pense nele como o guia telefónico da internet.</p>
 
@@ -316,7 +318,7 @@ module.exports.postsData = [
     date: '2025-05-13',
     author: 'Equipe Lazernet',
     excerpt: 'A internet oferece um mundo de conhecimento, mas também perigos. Saiba como usar ferramentas de controle parental para garantir uma experiência online mais segura para as crianças.',
-    image: '/img/blog/controle-parental.jpeg',
+    image: '${API_URL}/images/controle-parental.jpeg',
     content: `
       <p>Manter as crianças seguras online é uma preocupação constante para os pais. Felizmente, existem diversas ferramentas de <strong>controle parental</strong> que podem ajudar a criar um ambiente digital mais seguro.</p>
 
@@ -346,7 +348,7 @@ module.exports.postsData = [
     date: '2025-05-06',
     author: 'Equipe Lazernet',
     excerpt: 'É chegar o horário de pico e sua internet parece se arrastar? Entenda os principais motivos para a lentidão da conexão à noite e o que você pode fazer para melhorar.',
-    image: '/img/blog/internet-noite.jpg',
+    image: '${API_URL}/images/internet-noite.jpg',
     content: `
       <p>É uma queixa comum: durante o dia, a internet funciona perfeitamente, mas quando chega a noite, a velocidade parece diminuir. Existem algumas razões principais para que isso aconteça.</p>
 
@@ -369,7 +371,7 @@ module.exports.postsData = [
     date: '2025-04-29',
     author: 'Equipe Lazernet',
     excerpt: 'O sinal Wi-Fi não chega em todos os cômodos? Existem várias soluções para ampliar a cobertura, mas cada uma funciona de um jeito. Conheça as diferenças e escolha a ideal.',
-    image: '/img/blog/rede-mesh.jpg',
+    image: '${API_URL}/images/rede-mesh.jpg',
     content: `
       <p>Ter um bom sinal de Wi-Fi em toda a casa é essencial. Se o seu roteador principal não dá conta do recado, estas são as três principais soluções para expandir sua cobertura.</p>
 
@@ -389,7 +391,7 @@ module.exports.postsData = [
     date: '2025-04-22',
     author: 'Equipe Lazernet',
     excerpt: 'Além de uma senha forte, existem outras camadas de segurança que você pode aplicar para garantir que apenas as suas pessoas e dispositivos de confiança usem a sua internet.',
-    image: '/img/blog/wifi-seguro.jpg',
+    image: '${API_URL}/images/wifi-seguro.jpg',
     content: `
       <p>Proteger sua rede Wi-Fi é fundamental não só para evitar que vizinhos usem sua internet, mas também para proteger seus dados pessoais de possíveis ataques. Além do básico, como ter uma boa senha, veja outras dicas importantes.</p>
       
@@ -412,7 +414,7 @@ module.exports.postsData = [
     date: '2025-04-15',
     author: 'Equipe Lazernet',
     excerpt: 'Todos falam em velocidade de download, mas e o upload? Entenda por que uma boa taxa de envio de dados é crucial para videochamadas, jogos online e trabalho remoto.',
-    image: '/img/blog/upload-speed.webp',
+    image: '${API_URL}/images/upload-speed.webp',
     content: `
       <p>Quando contratamos um plano de internet, o grande número que vemos em destaque é quase sempre a velocidade de <strong>download</strong>. No entanto, a velocidade de <strong>upload</strong>, que determina quão rápido você envia dados para a internet, é igualmente importante para muitas tarefas modernas.</p>
 

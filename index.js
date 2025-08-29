@@ -25,6 +25,8 @@ if (missingVars.length > 0) {
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 // CONFIGURAÇÃO DE CORS
 const allowedOrigins = process.env.CORS_ORIGINS.split(',');
 app.use(cors({
