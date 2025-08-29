@@ -8,7 +8,7 @@ module.exports.postsData = [
     date: '2025-08-26',
     author: 'Equipe Lazernet',
     excerpt: 'Muitos culpam a internet quando a TV Box trava, mas a verdade é mais complexa. Entenda de uma vez por todas por que o seu serviço de IPTV pode estar a falhar e como saber se a sua internet está a funcionar corretamente.',
-    image: '${API_URL}/images/iptv-travando.webp',
+    image: 'https://lazernet-backend.onrender.com/images/iptv-travando.webp',
     content: `
       <p>É uma situação frustrante: no meio do seu filme, série ou jogo de futebol, a imagem congela e um ícone de "loading" aparece. A primeira reação de muitos é culpar o provedor de internet. Mas será que a culpa é mesmo da sua conexão?</p>
       <p>Neste post, vamos explicar a fundo como os serviços de <strong>IPTV e TV Box (especialmente os não oficiais, ou "piratas")</strong> funcionam e por que eles travam com tanta frequência.</p>
