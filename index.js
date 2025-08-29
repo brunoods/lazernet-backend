@@ -7,6 +7,11 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { z } = require('zod');
 const { SYSTEM_PROMPT } = require('./chatbotConfig'); 
 
+// --- NOVOS IMPORTS PARA OS DADOS ---
+const { postsData } = require('./posts'); 
+const { planosData } = require('./planos');
+// ------------------------------------
+
 // VERIFICAÇÃO INICIAL DE VARIÁVEIS DE AMBIENTE
 const requiredEnvVars = [
   'CORS_ORIGINS', 'GEMINI_API_KEY', 'SMTP_HOST', 'SMTP_PORT',
@@ -46,7 +51,6 @@ const newsletterSchema = z.object({
   _replyto: z.string().email("Por favor, insira um e-mail válido."),
   whatsapp: z.string().optional(),
 });
-// --- ALTERAÇÃO APLICADA AQUI: Novo schema para o histórico ---
 const chatbotSchema = z.object({
     history: z.array(z.object({
         sender: z.enum(['user', 'bot']),
@@ -56,7 +60,7 @@ const chatbotSchema = z.object({
 
 // INSTÂNCIAS DE SERVIÇOS
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT, 10),
@@ -64,12 +68,10 @@ const transporter = nodemailer.createTransport({
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
 });
 
-// ROTA DO CHATBOT ATUALIZADA PARA RECEBER HISTÓRICO
+// ROTA DO CHATBOT
 app.post('/chatbot', async (req, res, next) => {
   try {
     const { history } = chatbotSchema.parse(req.body);
-
-    // --- ALTERAÇÃO APLICADA AQUI: Formatar o histórico ---
     const formattedHistory = history
         .map(msg => `${msg.sender === 'user' ? 'Cliente' : 'LazerBot'}: ${msg.text}`)
         .join('\n');
@@ -99,7 +101,7 @@ app.post('/chatbot', async (req, res, next) => {
   }
 });
 
-// ... (as outras rotas não mudam) ...
+// ROTAS DE FORMULÁRIO (não mudam)
 app.post('/enviar-contato', async (req, res, next) => {
   try {
     const { name, _replyto, message } = contactFormSchema.parse(req.body);
@@ -131,6 +133,18 @@ app.post('/inscrever-newsletter', async (req, res, next) => {
     next(error);
   }
 });
+
+// --- NOVAS ROTAS PARA SERVIR O CONTEÚDO DO SITE ---
+app.get('/api/posts', (req, res) => {
+  // Ordena os posts por data, do mais recente para o mais antigo
+  const sortedPosts = postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  res.json(sortedPosts);
+});
+
+app.get('/api/planos', (req, res) => {
+  res.json(planosData);
+});
+// ----------------------------------------------------
 
 // MIDDLEWARE DE TRATAMENTO DE ERROS
 app.use((err, req, res, next) => {
