@@ -7,10 +7,10 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { z } = require('zod');
 const { SYSTEM_PROMPT } = require('./chatbotConfig'); 
 
-// --- NOVOS IMPORTS PARA OS DADOS ---
+// --- IMPORTS PARA OS DADOS ---
 const { postsData } = require('./posts'); 
 const { planosData } = require('./planos');
-// ------------------------------------
+const { coverageData } = require('./coverage-data'); // <-- ADICIONADO
 
 // VERIFICAÇÃO INICIAL DE VARIÁVEIS DE AMBIENTE
 const requiredEnvVars = [
@@ -101,7 +101,7 @@ app.post('/chatbot', async (req, res, next) => {
   }
 });
 
-// ROTAS DE FORMULÁRIO (não mudam)
+// ROTAS DE FORMULÁRIO
 app.post('/enviar-contato', async (req, res, next) => {
   try {
     const { name, _replyto, message } = contactFormSchema.parse(req.body);
@@ -134,15 +134,18 @@ app.post('/inscrever-newsletter', async (req, res, next) => {
   }
 });
 
-// --- NOVAS ROTAS PARA SERVIR O CONTEÚDO DO SITE ---
+// --- ROTAS PARA SERVIR O CONTEÚDO DO SITE ---
 app.get('/api/posts', (req, res) => {
-  // Ordena os posts por data, do mais recente para o mais antigo
   const sortedPosts = postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
   res.json(sortedPosts);
 });
 
 app.get('/api/planos', (req, res) => {
   res.json(planosData);
+});
+
+app.get('/api/coverage', (req, res) => {
+  res.json(coverageData);
 });
 // ----------------------------------------------------
 
