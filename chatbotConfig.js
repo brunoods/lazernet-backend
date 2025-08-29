@@ -78,12 +78,12 @@ const LAZERNET_KNOWLEDGE_BASE = `
 - Mirassol, Talhado, Mirassolândia, Ibiporanga, Monções, Floreal, Magda, General Salgado, São Luiz de Japiuba, Prudêncio e Moraes, Palestina, Duplo Céu, Boturuna, Ingás, Mangaratu, Pontes Gestal.
 
 # 7. Artigos do Blog (para usar como material de apoio)
-- Título: 'TV Box e IPTV travando? A culpa é mesmo da sua internet?' | Resumo: Explica por que serviços de IPTV pirata travam. | Link: /blog/iptv-pirata-trava-internet-ou-servidor | image: /img/blog/iptv-travando.webp
-- Título: '5 Dicas Essenciais para Melhorar o Sinal do seu Wi-Fi' | Resumo: Dicas sobre posicionamento do roteador e interferências. | Link: /blog/5-dicas-para-melhorar-seu-wi-fi | image: /img/blog/wifi-dicas.jpg
-- Título: 'Wi-Fi 2.4GHz vs 5GHz: Qual Rede Usar?' | Resumo: Diferenças de alcance e velocidade entre as bandas Wi-Fi. | Link: /blog/diferenca-wifi-2-4-e-5-ghz | image: /img/blog/wifi-ghz.png
-- Título: 'Qual a Velocidade Ideal Para Você?' | Resumo: Ajuda a escolher o plano com base no perfil de uso. | Link: /blog/qual-velocidade-de-internet-eu-preciso | image: /img/blog/qual-velocidade.webp
-- Título: 'Ping, Latência e Jitter: O Trio que Define sua Vitória nos Jogos Online' | Resumo: Explica termos técnicos para gamers. | Link: /blog/ping-latencia-jitter-para-jogos-online | image: /img/blog/ping-jogos.jpg
-- Título: 'Repetidor, Extensor ou Rede Mesh: Qual a Melhor Solução para sua Casa?' | Resumo: Diferenças entre soluções para ampliar a cobertura Wi-Fi. | Link: /blog/repetidores-extensores-e-redes-mesh | image: /img/blog/rede-mesh.jpg
+- Título: 'TV Box e IPTV travando? A culpa é mesmo da sua internet?' | Resumo: Explica por que serviços de IPTV pirata travam. | Link: /blog/iptv-pirata-trava-internet-ou-servidor | image: https://lazernet-service.vercel.app/images/iptv-travando.webp
+- Título: '5 Dicas Essenciais para Melhorar o Sinal do seu Wi-Fi' | Resumo: Dicas sobre posicionamento do roteador e interferências. | Link: /blog/5-dicas-para-melhorar-seu-wi-fi | image: https://lazernet-service.vercel.app/images/wifi-dicas.jpg
+- Título: 'Wi-Fi 2.4GHz vs 5GHz: Qual Rede Usar?' | Resumo: Diferenças de alcance e velocidade entre as bandas Wi-Fi. | Link: /blog/diferenca-wifi-2-4-e-5-ghz | image: https://lazernet-service.vercel.app/images/wifi-ghz.png
+- Título: 'Qual a Velocidade Ideal Para Você?' | Resumo: Ajuda a escolher o plano com base no perfil de uso. | Link: /blog/qual-velocidade-de-internet-eu-preciso | image: https://lazernet-service.vercel.app/images/qual-velocidade.webp
+- Título: 'Ping, Latência e Jitter: O Trio que Define sua Vitória nos Jogos Online' | Resumo: Explica termos técnicos para gamers. | Link: /blog/ping-latencia-jitter-para-jogos-online | image: https://lazernet-service.vercel.app/images/ping-jogos.jpg
+- Título: 'Repetidor, Extensor ou Rede Mesh: Qual a Melhor Solução para sua Casa?' | Resumo: Diferenças entre soluções para ampliar a cobertura Wi-Fi. | Link: /blog/repetidores-extensores-e-redes-mesh | image: https://lazernet-service.vercel.app/images/rede-mesh.jpg
 
 # 8. Glossário de Termos Técnicos
 - **Comodato:** É como um empréstimo. O equipamento (roteador) é fornecido pela Lazernet enquanto você for nosso cliente, sem custo adicional.
