@@ -8,7 +8,7 @@ module.exports.planosData = [
     velocidade: "100 mega",
     upload: "50 mega", // Nova informação
     idealPara: "Navegar, redes sociais e e-mails.", // Nova informação
-    equipamento: "Roteador Wi-Fi 4 (em comodato)", // Nova informação
+    equipamento: "Roteador Wi-Fi 5 (em comodato)", // Nova informação
     originalVelocidade: null,
     preco: "R$ 69,90/mês",
     originalPreco: "R$ 79,90",
@@ -38,12 +38,12 @@ module.exports.planosData = [
     velocidade: "500 mega",
     upload: "250 mega",
     idealPara: "Jogos online, streaming em 4K e múltiplos dispositivos.",
-    equipamento: "Roteador Wi-Fi 5 de alto desempenho (em comodato)",
+    equipamento: "Roteador Wi-Fi 6 de alto desempenho (em comodato)",
     originalVelocidade: null,
     preco: "R$ 99,90/mês",
     originalPreco: "R$ 109,90",
     popular: true,
-    tagText: "MAIS POPULAR",
+    tagText: "MELHOR CUSTO-BENEFÍCIO",
     descricaoDetalhada: "A experiência definitiva em velocidade. Ideal para gamers que precisam de baixa latência, para quem faz streaming em 4K e para casas com muitos dispositivos conectados ao mesmo tempo. Desfrute do máximo que a fibra óptica pode oferecer."
   },
 ];
