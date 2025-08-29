@@ -170,7 +170,9 @@ app.use((err, req, res, next) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`✅ Servidor backend a correr na porta ${PORT}`);
-});
+//const PORT = process.env.PORT || 3001;
+//app.listen(PORT, () => {
+//  console.log(`✅ Servidor backend a correr na porta ${PORT}`);
+//});
+
+module.exports = app;
