@@ -1,6 +1,5 @@
 // data/blog/posts.js
-
-export const postsData = [
+module.exports.postsData = [
   {
     slug: 'iptv-pirata-trava-internet-ou-servidor',
     title: 'TV Box e IPTV travando? A culpa é mesmo da sua internet?',

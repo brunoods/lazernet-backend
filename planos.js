@@ -1,6 +1,6 @@
 // data/planos.js
 
-export const planosData = [
+module.exports.planosData = [
   {
     id: 1,
     slug: 'fibra-basico-100', // Identificador para o URL
